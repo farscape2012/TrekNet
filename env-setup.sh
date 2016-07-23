@@ -4,8 +4,9 @@
 # Exit immediately if a command exits with a non-zero status.
 set -euo pipefail
 
-sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python-dev python-pip unzip
-sudo pip install virtualenv
+sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python-dev python-pip unzip build-essential 
+sudo pip install --upgrade pip 
+sudo pip install --upgrade virtualenv 
 
 sudo mkdir /opt/tools/
 sudo chown -R ericsson:ericsson /opt/tools/
