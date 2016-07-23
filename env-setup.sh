@@ -35,3 +35,14 @@ wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
 unzip titan-1.0.0-hadoop1.zip
 
 rm *.gz*.zip
+
+# !!!!!!!!!!!!! Open all ports !!!!!!!!!!!!!! 
+# Dangerous!
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables-save > /etc/iptables/rules.v4
+/etc/network/interfaces
+sudo sh -c "iptables-save > /etc/iptables.conf
+/etc/rc.local:
+
+echo "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" >> /etc/rc.local
