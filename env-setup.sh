@@ -18,13 +18,17 @@ mv apache-cassandra-2.2.7 cassandra-2.2.7
 wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip
 unzip elastcisearch-2.3.4.zip
 
-# Gremlin Server
-wget https://archive.apache.org/dist/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-console-3.2.0-incubating-bin.zip
+# Gremlin server
+wget https://archive.apache.org/dist/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip
 unzip apache-gremlin-server-3.2.0-incubating-bin.zip
 mv apache-gremlin-server-3.2.0-incubating gremlin-server-3.2.0
+# Gremlin console
+wget https://archive.apache.org/dist/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-console-3.2.0-incubating-bin.zip
+unzip apache-gremlin-console-3.2.0-incubating-bin.zip
+mv apache-gremlin-console-3.2.0-incubating gremlin-console-3.2.0
 
 # Titan
 wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
 unzip titan-1.0.0-hadoop1.zip
 
-rm apache-cassandra-2.2.7-bin.tar.gz elastcisearch-2.3.4.zip apache-gremlin-server-3.2.0-incubating-bin.zip titan-1.0.0-hadoop1.zip 
+rm apache-cassandra-2.2.7-bin.tar.gz elastcisearch-2.3.4.zip apache-gremlin-server-3.2.0-incubating-bin.zip apache-gremlin-console-3.2.0-incubating-bin.zip titan-1.0.0-hadoop1.zip 
