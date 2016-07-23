@@ -5,6 +5,7 @@
 set -euo pipefail
 
 sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python unzip
+sudo pip install virtualenv
 
 sudo mkdir /opt/tools/
 sudo chown -R ericsson:ericsson /opt/tools/
@@ -22,7 +23,7 @@ sudo mkdir -p /var/lib/cassandra/saved_caches
 
 # elasticsearch
 wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip
-unzip elastcisearch-2.3.4.zip
+unzip elasticsearch-2.3.4.zip
 
 # Gremlin server
 wget https://archive.apache.org/dist/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip
@@ -37,13 +38,12 @@ mv apache-gremlin-console-3.2.0-incubating gremlin-console-3.2.0
 wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
 unzip titan-1.0.0-hadoop1.zip
 
-rm *.gz*.zip
+rm *.gz *.zip
 
 # !!!!!!!!!!!!! Open all ports !!!!!!!!!!!!!! 
 # Dangerous!
 sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-sudo iptables-save > /etc/iptables/rules.v4
-/etc/network/interfaces
-sudo sh -c "iptables-save > /etc/iptables.conf
-echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee -a /etc/rc.local
+
+sudo sh -c "iptables-save > /etc/iptables.conf"
+echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee -a /etc/rc.local > /dev/null
