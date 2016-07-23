@@ -13,6 +13,9 @@ echo "inside /opt/tools"
 wget http://mirror.netinch.com/pub/apache/cassandra/2.2.7/apache-cassandra-2.2.7-bin.tar.gz 
 tar -xvf *cassandra* 
 mv apache-cassandra-2.2.7 cassandra-2.2.7
+sudo mkdir -p /var/lib/cassandra/data
+sudo mkdir -p /var/lib/cassandra/commitlog
+sudo mkdir -p /var/lib/cassandra/saved_caches
 
 # elasticsearch
 wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip
