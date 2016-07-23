@@ -1,0 +1,25 @@
+# TrekNet
+#!/bin/bash
+
+sudo mkdir /opt/tools/
+
+# cassandra
+cd /opt/tools/
+wget http://mirror.netinch.com/pub/apache/cassandra/2.2.7/apache-cassandra-2.2.7-bin.tar.gz 
+tar -xvf *cassandra* 
+mv apache-cassandra-2.2.7 cassandra-2.2.7
+
+# elasticsearch
+wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip /opt/tools/
+unzip elastcisearch-2.3.4.zip
+
+# Gremlin Server
+wget http://www.nic.funet.fi/pub/mirrors/apache.org/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip /opt/tools/
+unzip apache-gremlin-server-3.2.0-incubating-bin.zip
+mv apache-gremlin-server-3.2.0-incubating gremlin-server-3.2.0
+
+# Titan
+wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
+unzip titan-1.0.0-hadoop1.zip
+
+sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python
