@@ -1,20 +1,25 @@
 # TrekNet
 #!/bin/bash
 
+sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python unzip
+
 sudo mkdir /opt/tools/
+sudo chown -R ericsson:ericsson /opt/tools/
+sudo chmod -R 755 /opt/tools/
+cd /opt/tools/
+echo "inside /opt/tools"
 
 # cassandra
-cd /opt/tools/
 wget http://mirror.netinch.com/pub/apache/cassandra/2.2.7/apache-cassandra-2.2.7-bin.tar.gz 
 tar -xvf *cassandra* 
 mv apache-cassandra-2.2.7 cassandra-2.2.7
 
 # elasticsearch
-wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip /opt/tools/
+wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip
 unzip elastcisearch-2.3.4.zip
 
 # Gremlin Server
-wget http://www.nic.funet.fi/pub/mirrors/apache.org/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip /opt/tools/
+wget http://www.nic.funet.fi/pub/mirrors/apache.org/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip
 unzip apache-gremlin-server-3.2.0-incubating-bin.zip
 mv apache-gremlin-server-3.2.0-incubating gremlin-server-3.2.0
 
@@ -22,4 +27,4 @@ mv apache-gremlin-server-3.2.0-incubating gremlin-server-3.2.0
 wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
 unzip titan-1.0.0-hadoop1.zip
 
-sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python
+rm apache-cassandra-2.2.7-bin.tar.gz elastcisearch-2.3.4.zip apache-gremlin-server-3.2.0-incubating-bin.zip titan-1.0.0-hadoop1.zip 
