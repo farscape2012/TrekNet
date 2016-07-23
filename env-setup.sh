@@ -19,7 +19,7 @@ wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distrib
 unzip elastcisearch-2.3.4.zip
 
 # Gremlin Server
-wget http://www.nic.funet.fi/pub/mirrors/apache.org/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-server-3.2.0-incubating-bin.zip
+wget https://archive.apache.org/dist/incubator/tinkerpop/3.2.0-incubating/apache-gremlin-console-3.2.0-incubating-bin.zip
 unzip apache-gremlin-server-3.2.0-incubating-bin.zip
 mv apache-gremlin-server-3.2.0-incubating gremlin-server-3.2.0
 
