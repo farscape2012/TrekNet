@@ -1,6 +1,9 @@
 # TrekNet
 #!/bin/bash
 
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
 sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update && sudo apt-get install oracle-java8-installer python unzip
 
 sudo mkdir /opt/tools/
