@@ -43,6 +43,4 @@ sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 sudo iptables-save > /etc/iptables/rules.v4
 /etc/network/interfaces
 sudo sh -c "iptables-save > /etc/iptables.conf
-/etc/rc.local:
-
 echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee -a /etc/rc.local
