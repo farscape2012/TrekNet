@@ -31,4 +31,4 @@ mv apache-gremlin-console-3.2.0-incubating gremlin-console-3.2.0
 wget http://s3.thinkaurelius.com/downloads/titan/titan-1.0.0-hadoop1.zip
 unzip titan-1.0.0-hadoop1.zip
 
-rm apache-cassandra-2.2.7-bin.tar.gz elastcisearch-2.3.4.zip apache-gremlin-server-3.2.0-incubating-bin.zip apache-gremlin-console-3.2.0-incubating-bin.zip titan-1.0.0-hadoop1.zip 
+rm *.gz*.zip
