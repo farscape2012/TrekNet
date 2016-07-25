@@ -1,0 +1,8 @@
+# Cassandra storage config YAML 
+
+cluster_name: 'TrekNet Cluster'
+seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          - seeds: "192.168.122.238,192.168.122.203"
+          #- seeds: "127.0.0.1"
