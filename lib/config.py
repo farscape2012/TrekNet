@@ -4,9 +4,9 @@ import os
 
 HOME_CASSANDRA = "/opt/tools/casandra-2.2.7"
 DIR = os.path.dirname(__file__)
-CASSANDRA_TEMPLATE = os.path.join(DIR, '../config/template.yaml')
-CASSANDRA_PARAMETER = os.path.join(DIR, '../config/cassandra.yaml')
-CASSANDRA_CONFIG = os.path.join(HOME_CASSANDRA, 'config/cassandra.yaml')
+CASSANDRA_TEMPLATE = os.path.join(DIR, '../conf/template.yaml')
+CASSANDRA_PARAMETER = os.path.join(DIR, '../conf/cassandra.yaml')
+CASSANDRA_CONFIG = os.path.join(HOME_CASSANDRA, 'conf/cassandra.yaml')
 
 class Cassandra(object):
     def read_yaml(self, file):
