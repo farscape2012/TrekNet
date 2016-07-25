@@ -32,4 +32,5 @@ if __name__ == __main__:
     parameter = read_yaml(CASSANDRA_PARAMETER)
     config = set_yaml(template, parameter)
     write_yaml(CASSANDRA_CONFIG, config)
-
+#listen_address: 192.168.122.238
+#rpc_address: 192.168.122.238
