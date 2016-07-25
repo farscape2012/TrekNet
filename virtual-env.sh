@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# author : Chengyu Liu
 
 echo `which python`
 
@@ -15,8 +16,9 @@ virtualenv "$VirtEnv"
 source "$VirtEnv"/bin/activate
 echo `which python`
 
-pip install -r pypa-requirement
+pip install -r config/pypa-requirement
 
-pip freeze
+#pip freeze
+./lib/config.py
 
 #deactivate
