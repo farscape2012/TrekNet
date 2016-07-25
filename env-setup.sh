@@ -20,6 +20,10 @@ mv apache-cassandra-2.2.7 cassandra-2.2.7
 sudo mkdir -p /var/lib/cassandra/data
 sudo mkdir -p /var/lib/cassandra/commitlog
 sudo mkdir -p /var/lib/cassandra/saved_caches
+sudo chmod -R 755 /var/lib/cassandra/data
+sudo chmod -R 755 /var/lib/cassandra/commitlog
+sudo chmod -R 755 /var/lib/cassandra/saved_caches
+
 
 # elasticsearch
 wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.3.4/elasticsearch-2.3.4.zip
@@ -42,8 +46,8 @@ rm *.gz *.zip
 
 # !!!!!!!!!!!!! Open all ports !!!!!!!!!!!!!! 
 # Dangerous!
-sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-sudo sh -c "iptables-save > /etc/iptables.conf"
-echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee -a /etc/rc.local > /dev/null
+#sudo sh -c "iptables-save > /etc/iptables.conf"
+#echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee -a /etc/rc.local > /dev/null
