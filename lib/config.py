@@ -2,7 +2,7 @@
 import yaml
 import os
 
-HOME_CASSANDRA = "/opt/tools/casandra-2.2.7"
+HOME_CASSANDRA = "/opt/tools/cassandra-2.2.7"
 DIR = os.path.dirname(__file__)
 CASSANDRA_TEMPLATE = os.path.join(DIR, '../conf/template.yaml')
 CASSANDRA_PARAMETER = os.path.join(DIR, '../conf/cassandra.yaml')
