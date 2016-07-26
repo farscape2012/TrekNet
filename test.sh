@@ -18,5 +18,6 @@ source "$VirtEnv/bin/activate"
 pip --disable-pip-version-check install --requirement conf/pypa-requirement > log/pip-install.log
 
 #pip freeze
-exec  python main.py
+
+./lib/config.py
 #deactivate
