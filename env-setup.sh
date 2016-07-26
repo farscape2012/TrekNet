@@ -46,8 +46,8 @@ rm *.gz *.zip
 
 # !!!!!!!!!!!!! Open all ports !!!!!!!!!!!!!! 
 # Dangerous!
-sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+#sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-sudo sh -c "iptables-save > /etc/iptables.conf"
-echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee /etc/rc.local > /dev/null
+#sudo sh -c "iptables-save > /etc/iptables.conf"
+#echo -e "# Load iptables rules from this file\niptables-restore < /etc/iptables.conf" | sudo tee /etc/rc.local > /dev/null
