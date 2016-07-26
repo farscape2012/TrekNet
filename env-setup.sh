@@ -21,10 +21,13 @@ sudo mkdir -p /var/lib/cassandra/data
 sudo mkdir -p /var/lib/cassandra/commitlog
 sudo mkdir -p /var/lib/cassandra/saved_caches
 sudo mkdir -p /var/log/cassandra/
+<<<<<<< HEAD
 sudo chown -R ericsson:ericsson /var/lib/cassandra/data
 sudo chown -R ericsson:ericsson /var/lib/cassandra/commitlog
 sudo chown -R ericsson:ericsson /var/lib/cassandra/saved_caches
 sudo chown -R ericsson:ericsson /var/log/cassandra/
+=======
+>>>>>>> 5f86aa37e499b2eb3a28c1de34bd86ee8acea237
 sudo chmod -R 755 /var/lib/cassandra/data
 sudo chmod -R 755 /var/lib/cassandra/commitlog
 sudo chmod -R 755 /var/lib/cassandra/saved_caches
