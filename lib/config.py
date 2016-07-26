@@ -4,12 +4,19 @@ import os
 import netifaces
 
 
-HOME_CASSANDRA = "/opt/tools/cassandra-2.2.7"
-#HOME_CASSANDRA = "/home/eijmmmp/TrekNet/"
 DIR = os.path.dirname(__file__)
-CASSANDRA_TEMPLATE = os.path.join(DIR, '../conf/template.yaml')
+#HOME_CASSANDRA = "/home/eijmmmp/TrekNet/"
+HOME_CASSANDRA = "/opt/tools/cassandra-2.2.7"
+CASSANDRA_TEMPLATE = os.path.join(DIR, '../conf/cassandra-template.yaml')
 CASSANDRA_PARAMETER = os.path.join(DIR, '../conf/cassandra.yaml')
 CASSANDRA_CONFIG = os.path.join(HOME_CASSANDRA, 'conf/cassandra.yaml')
+
+HOME_TITAN = "/opt/tools/titan-1.0.0-hadoop1/"
+#HOME_TITAN = "/home/eijmmmp/TrekNet/"
+TITAN_TEMPLATE = os.path.join(DIR, '../conf/titan-template.properties')
+TITAN_PARAMETER = os.path.join(DIR, '../conf/titan.properties')
+TITAN_CONFIG = os.path.join(HOME_TITAN, 'conf/titan.yaml')
+
 
 class Cassandra(object):
     def __init__(self, template=CASSANDRA_TEMPLATE, parameter=CASSANDRA_PARAMETER, config=CASSANDRA_CONFIG, interface='eth0'):
@@ -58,7 +65,27 @@ class Cassandra(object):
         with open(file, 'w') as outfile:
             for line in lines:
                 outfile.write(line)
+class Titan(object):
+    def __init__(self):
+
 
 if __name__ == "__main__":
     cassandra = Cassandra(config="./conf/new.yaml", interface='eth1')
-    #cassandra = Cassandra(template="template.yaml", parameter="cassandra.yaml",config='new.yaml', interface='eth1')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
