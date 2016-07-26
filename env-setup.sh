@@ -20,9 +20,15 @@ mv apache-cassandra-2.2.7 cassandra-2.2.7
 sudo mkdir -p /var/lib/cassandra/data
 sudo mkdir -p /var/lib/cassandra/commitlog
 sudo mkdir -p /var/lib/cassandra/saved_caches
+sudo mkdir -p /var/log/cassandra/
+sudo chown -R ericsson:ericsson /var/lib/cassandra/data
+sudo chown -R ericsson:ericsson /var/lib/cassandra/commitlog
+sudo chown -R ericsson:ericsson /var/lib/cassandra/saved_caches
+sudo chown -R ericsson:ericsson /var/log/cassandra/
 sudo chmod -R 755 /var/lib/cassandra/data
 sudo chmod -R 755 /var/lib/cassandra/commitlog
 sudo chmod -R 755 /var/lib/cassandra/saved_caches
+sudo chmod -R 755 /var/log/cassandra/
 
 
 # elasticsearch
