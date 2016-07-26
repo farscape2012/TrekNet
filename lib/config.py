@@ -21,11 +21,11 @@ class Cassandra(object):
         self.config = self.set_yaml(self.config, self.parameter)
         self.config = self.set_yaml(self.config, {'listen_address': self.ip})
         self.config = self.set_yaml(self.config, {'rpc_address': self.ip})
-        self.set_seeds_ip()
+        self.set_seeds_ip(self.ip)
         self.enable_trouble_connection(file=os.path.join(HOME_CASSANDRA, 'conf/cassandra-env.sh'))
         self.write_yaml(self.file_config, self.config)
-    def set_seeds_ip(self):
-        self.config['seed_provider'][0]['parameters'][0]['seeds'] = self.ip
+    def set_seeds_ip(self, ip):
+        self.config['seed_provider'][0]['parameters'][0]['seeds'] = ip
     def read_yaml(self, file):
         with open(file) as f:
             try:
