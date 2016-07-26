@@ -23,7 +23,7 @@ class Cassandra(object):
         self.config = self.set_yaml(self.config, {'rpc_address': self.ip})
         self.set_seeds_ip(self.ip)
         self.enable_trouble_connection(file=os.path.join(HOME_CASSANDRA, 'conf/cassandra-env.sh'))
-        self.write_yaml(self.file_config, self.config)
+        self.write_yaml()
     def set_seeds_ip(self, ip):
         self.config['seed_provider'][0]['parameters'][0]['seeds'] = ip
     def read_yaml(self, file):
@@ -39,9 +39,9 @@ class Cassandra(object):
         for key in param_keys:
             template[key] = parameter[key]
         return template
-    def write_yaml(self, file, data):
-        with open(file, 'w') as f:
-            yaml.dump(data, f, allow_unicode=True,default_flow_style=False)
+    def write_yaml(self):
+        with open(self.file_config, 'w') as f:
+            yaml.dump(self.config, f, allow_unicode=True,default_flow_style=False)
     def get_host_ip(self, interface='eth0'):
         try:
             return netifaces.ifaddresses(interface)[2][0]['addr']
