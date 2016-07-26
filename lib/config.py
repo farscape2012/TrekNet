@@ -49,5 +49,5 @@ class Cassandra(object):
 
 
 if __name__ == "__main__":
-    cassandra = Cassandra(config="../conf/new.yaml", interface='eth1')
+    cassandra = Cassandra(config="./conf/new.yaml", interface='eth1')
     #cassandra = Cassandra(template="template.yaml", parameter="cassandra.yaml",config='new.yaml', interface='eth1')

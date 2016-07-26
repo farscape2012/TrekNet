@@ -1,0 +1,2 @@
+Requirement already satisfied (use --upgrade to upgrade): netifaces in ./virtEnv/lib/python2.7/site-packages (from -r conf/pypa-requirement (line 1))
+Requirement already satisfied (use --upgrade to upgrade): pyyaml in ./virtEnv/lib/python2.7/site-packages (from -r conf/pypa-requirement (line 2))

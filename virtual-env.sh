@@ -16,7 +16,7 @@ virtualenv "$VirtEnv"
 source "$VirtEnv"/bin/activate
 echo `which python`
 
-pip install -r conf/pypa-requirement
+pip --disable-pip-version-check install --requirement conf/pypa-requirement > log/pip-install.log
 
 #pip freeze
 ./lib/config.py
