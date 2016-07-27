@@ -8,7 +8,7 @@ import netifaces
 DIR = os.path.dirname(__file__)
 HOME_CASSANDRA = "/opt/tools/cassandra-2.2.7"
 CASSANDRA_TEMPLATE = os.path.join(DIR, '../conf/cassandra-template.yaml')
-CASSANDRA_PARAMETER = os.path.join(DIR, '../conf/cassandra.yaml')
+CASSANDRA_PARAMETER = os.path.join(DIR, '../conf/cassandra-parameter.yaml')
 CASSANDRA_CONFIG = os.path.join(HOME_CASSANDRA, 'conf/')
 
 HOME_TITAN = "/opt/tools/titan-1.0.0-hadoop1/"
@@ -50,7 +50,7 @@ class Titan(object):
 
 class Cassandra(object):
     def __init__(self, template=CASSANDRA_TEMPLATE, parameter=CASSANDRA_PARAMETER, config=CASSANDRA_CONFIG, interface='eth0'):
-        self.file_config = os.path.join(config, 'my-cassandra.yaml')
+        self.file_config = os.path.join(config, 'cassandra.yaml')
         self.config = self.read_yaml(template)
         self.parameter = self.read_yaml(parameter)
         self.ip = self.get_host_ip(interface)
