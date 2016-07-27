@@ -17,7 +17,7 @@ TITAN_PARAMETER = os.path.join(DIR, '../conf/titan-parameter.properties')
 TITAN_CONFIG = os.path.join(HOME_TITAN, 'conf/')
 
 class Titan(object):
-    def __init__(self, template=TITAN_TEMPLATE, parameter=TITAN_PARAMETER, config=TITAN_CONFIG, ip, elasticsearch=False):
+    def __init__(self, template=TITAN_TEMPLATE, parameter=TITAN_PARAMETER, config=TITAN_CONFIG, ip="127.0.0.1", elasticsearch=False):
         self.cassandra_ip = ip
         self.elasticsearch = elasticsearch
         self.file_config = os.path.join(config, 'my-titan.properties')
