@@ -13,16 +13,18 @@ CASSANDRA_CONFIG = os.path.join(HOME_CASSANDRA, 'conf/')
 
 HOME_TITAN = "/opt/tools/titan-1.0.0-hadoop1/"
 TITAN_TEMPLATE = os.path.join(DIR, '../conf/titan-template.properties')
-TITAN_PARAMETER = os.path.join(DIR, '../conf/titan.properties')
+TITAN_PARAMETER = os.path.join(DIR, '../conf/titan-parameter.properties')
 TITAN_CONFIG = os.path.join(HOME_TITAN, 'conf/')
 
 class Titan(object):
-    def __init__(self, template=TITAN_TEMPLATE, parameter=TITAN_PARAMETER, config=TITAN_CONFIG, elasticsearch=False):
-        self.file_config = os.path.join(config, 'my-titan.properties')
+    def __init__(self, template=TITAN_TEMPLATE, parameter=TITAN_PARAMETER, config=TITAN_CONFIG, ip, elasticsearch=False):
+        self.cassandra_ip = ip
         self.elasticsearch = elasticsearch
+        self.file_config = os.path.join(config, 'my-titan.properties')
         self.config = self.read_properties(template)
         self.parameter = self.read_properties(parameter)
         self.set_properties(self.parameter)
+        self.set_properties({"storage.hostname": self.cassandra_ip})
         self.write_properties()
     def read_properties(self, file, sep='=', comment='#'):
         d = {}
