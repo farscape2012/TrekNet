@@ -45,16 +45,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print args
     if args.Ctitan:
-        print "Titan"
-    elif args.Ccassandra:
-        print "Cassandra"
-    elif args.Cgremlin:
-        print "Gremlin"
+        print "Config titan server"
+        titan = Titan()
+    if args.Ccassandra:
+        print "Config cassandra server"
+        cassandra = Cassandra()
+        cassandra.set_seeds_ip("192.168.122.101")
+        cassandra.write_yaml()
+    if args.Cgremlin:
+        print "Config gremlin server"
 
-#### it will take either the first string (like a, m) or string with double -- as dest attribute
-
-#    print "main is executing"
-#    cassandra = Cassandra()
-#    cassandra.set_seeds_ip("192.168.122.101")
-#    cassandra.write_yaml()
-#    titan = Titan()
