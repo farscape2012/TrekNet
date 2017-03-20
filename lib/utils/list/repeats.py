@@ -1,4 +1,4 @@
-def FindFrequentElement(arr, freq='most'):
+def FindRepeatElement(arr, freq='most'):
     """
         Find (most / least / K ) frequent elements and frequency. Normally it is slow ( O(n log n) for sorting ) or uses too much memory ( O(n) for a hash table )
         :type arr: List[int]
