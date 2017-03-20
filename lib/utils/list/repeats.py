@@ -7,6 +7,8 @@ def FindRepeatElement(arr, freq='most'):
         """
     def __linearTimeAuxiliarySpace(arr, freq=most):
         """
+            Requirements:
+                This algorithm only works if the length of array is larger than the maximum value of the array.
             :type arr: List[int]
             :type freq: string (most, least or a number)
             :rtype: int
@@ -14,11 +16,7 @@ def FindRepeatElement(arr, freq='most'):
             Note:
                 Time complexity: O(n) in worst-case
                 Space complexity: O(1)
-            Limitation:
-                This algorithm only works if the length of array is larger than the maximum value of the array.
-
             When freq = "least", algorithm sometimes fails if there are elements whose frequency is one.
-
             Example:
                   Note: Such an algorithm only works if the length of array is larger than the maximum value of the array.
                   Given an integer array, find the most frequent number and it's count in the array. Write the
@@ -109,7 +107,7 @@ def FindRepeatElement(arr, freq='most'):
         repeat_value = __findRepeatElement(dict, repeats)
         return repeats, repeat_value
 
-    if len(arr) >= maxv:
+    if len(arr) >= max(arr) + 1 and min(arr) >= 0:
         return __linearTimeAuxiliarySpace(arr, freq=freq)
     else:
         return __linearTimeLinearSpace(arr,freq=freq)
