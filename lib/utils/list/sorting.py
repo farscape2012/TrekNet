@@ -50,3 +50,25 @@ def mergeSort(arr):
             j=j+1
             k=k+1
     return arr
+
+def countSort(arr):
+    """ sort an array using count sort algorithm
+    :type arr: List[int/float]
+    :rtype: int/float    
+    Note:
+        Time complexity: O(n) in best-case; O(n) on average; O(n) in worst case
+        Space complexity: O(n) 
+    """
+    dict = {}
+    for i in arr:
+        if i in dict:
+            dict[i] += 1
+        else:
+            dict[i] = 1
+    rtn = []
+    for i in xrange(min(arr), max(arr)+1):
+        try:
+            rtn.extend([i] * dict[i])
+        except:
+            pass
+    return rtn
