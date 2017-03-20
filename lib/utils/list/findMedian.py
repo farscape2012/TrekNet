@@ -3,8 +3,8 @@ def findMeidan(arr):
     :type arr: List[int/float]
     :rtype: int / float
     Note:
-        Time complexity: O(n) on average; O(n^2) in worst case
-        Space complexity: O(n) on average; O(n^2) in worst case
+        Time complexity: O(nlog(n)) on average; O(n^2) in worst case
+        Space complexity: O(nlog(n)) on average; O(n^2) in worst case
     """
     def findKthLargest(arr, k):
         """ Find kth largest element in the list
