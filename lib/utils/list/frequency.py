@@ -1,8 +1,9 @@
 def FindFrequentElement(arr, freq='most'):
-    """ Find (most / least / K ) frequent elements and frequency
+    """ Find (most / least / K ) frequent elements and frequency. Normally it is slow ( O(n log n) for sorting ) or uses too much memory ( O(n) for a hash table )
     :type arr: List[int]
     :type freq: string (most, least or a number)
     :rtype: int
+
     
     Note: 
         Time complexity: O(n) in worst-case
