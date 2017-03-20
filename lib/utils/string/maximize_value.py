@@ -1,7 +1,7 @@
 def maximizeValueGivenKSwap(string, k):
     """ Given a positive integer (string), find possible maximum number by doing at-most K swap operations on its digits.
     :type string: string of integer
-    :rtype: int / float    
+    :rtype: string of integer  
 
     Complexity:
         Time : O(k*log(n))
@@ -33,7 +33,7 @@ def maximizeValueGivenKSwap(string, k):
 def maximizeValueGivenKSwapAdjacentDigit(string, k):
     """ Given a positive integer, find Maximum number possible by doing at-most K swaps on the adjacent digits
     :type string: string of integer
-    :rtype: int / float    
+    :rtype: string of integer   
 
     Complexity:
         Time : O(k*log(n))
@@ -61,3 +61,36 @@ def maximizeValueGivenKSwapAdjacentDigit(string, k):
         start += 1
         return __recursive_func(string, k, start)
     return __recursive_func(string, k, start=0)
+
+def fineNextGreaterNumber(string):
+    """ Find next greater number with same set of digits
+    Given a number n, find the smallest number that has same set of digits as n and is greater than n. 
+    :type string: string of integer
+    :rtype: string of integer
+    Complexity:
+        Time : O(n)  with improvement of sorted() function for sorting digits 
+        Space : O(1)
+    """
+    def __str_swap(string, i, j):
+        if i > len(string) or j > len(string):
+            return string
+        lst = list(string)
+        lst[i], lst[j] = lst[j], lst[i]
+        return ''.join(lst)
+    i=len(string) - 1
+    while i > 0:
+        if string[i-1] < string[i]:
+            break
+        else:
+            i -= 1
+    if i == 0:
+        return None
+    print i, string[i-1]
+    x = string[i-1]
+    smallest = i
+    for j in xrange(i,len(string)):
+        if string[j] > x and string[j] < string[smallest]:
+            smallest = j
+    string = __str_swap(string, i-1, smallest)
+    string = string[:i] + "".join(sorted(string[i:]))
+    return string
