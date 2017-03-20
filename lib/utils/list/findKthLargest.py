@@ -3,6 +3,9 @@ def findKthLargest(nums, k):
     :type nums: List[int]
     :type k: int
     :rtype: int
+    Note:
+        Time complexity: O(n) on average; O(n^2) in worst case
+        Space complexity: O(n) on average; O(n^2) in worst case
     """
     if k > len(nums):
         return None
