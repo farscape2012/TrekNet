@@ -1,6 +1,7 @@
 def quicksort(arr):
     """ sort an array using quick sort algorithm
-    
+    :type arr: List
+    :rtype: int/float    
     Note:
         Time complexity: best case O(nlog(n)) or O(n); O(nlog(n)) on average; O(N^2) in worst case
         Space complexity: O(n) 
