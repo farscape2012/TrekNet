@@ -73,3 +73,24 @@ def countSort(arr):
         except:
             pass
     return rtn
+
+def insertionSort(arr):
+    """ sort an array using insertion sort algorithm
+    :type arr: List[int/float]
+    :rtype: int/float    
+    Note:
+        Time complexity: O(n) in best-case; O(n^2) on average; O(n^2) in worst case
+        Space complexity: O(n) 
+    """
+    total = 0
+    for i in xrange(1, len(arr)):
+        j = i
+        count = 0
+        while j > 0 and arr[j-1] > arr[j]:
+            tmp =  arr[j]
+            arr[j] = arr[j-1]
+            arr[j-1] = tmp
+            j -= 1
+            count += 1
+        total += count
+    return arr
