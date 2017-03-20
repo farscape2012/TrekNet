@@ -1,18 +1,18 @@
-def findKthLargest(nums, k):
+def findKthLargest(arr, k):
     """ Find kth largest element in the list
-    :type nums: List[int]
+    :type arr: List[int]
     :type k: int
     :rtype: int
     Note:
         Time complexity: O(n) on average; O(n^2) in worst case
         Space complexity: O(n) on average; O(n^2) in worst case
     """
-    if k > len(nums):
+    if k > len(arr):
         return None
-    pivot = nums[0]
-    left  = [l for l in nums if l < pivot]
-    equal = [e for e in nums if e == pivot]
-    right = [r for r in nums if r > pivot]
+    pivot = arr[0]
+    left  = [l for l in arr if l < pivot]
+    equal = [e for e in arr if e == pivot]
+    right = [r for r in arr if r > pivot]
     if k <= len(right):
         return findKthLargest(right, k)
     elif (k - len(right)) <= len(equal):
