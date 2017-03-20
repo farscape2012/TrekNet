@@ -111,3 +111,58 @@ def FindKRepeatElement(arr, freq='most'):
         return __linearTimeAuxiliarySpace(arr, freq=freq)
     else:
         return __linearTimeLinearSpace(arr,freq=freq)
+
+    
+    def removeRepeatedElement(arr):
+    """ Remove repeats/duplicated values for a list of int.
+        :type arr: List[int]
+        :rtype: int, List[int]
+    Note:
+        Time complexity: O(n^2)
+        space complexity: O(n)
+    """
+    def __noneLinearTime(arr):
+        """ This algorithm can be optimized by sort the array first (using in-place merge-sort algorithm ( complexity: O(nlog(n)) )) and comparing adjacent elements: if they are the same then they are duplicates
+        """
+        i = 0
+        while len(arr) > 0 and i < len(arr):
+            for j in xrange(len(arr)-1, i-1, -1):
+                if arr[i] == arr[j] and i < j:
+                    del arr[j]
+            i += 1
+        return arr
+    return __noneLinearTime(arr)
+
+
+def findRepeatedElement(arr):
+    """Find repeated elements. No need to return frequency. Two algorithms are implemented. Time complexity is O(n) and O(n^2).
+    Algorithm 1 works for an array which contains element from 0 to n-1 where n is smaller than the length of array.
+    Algorithm 2 works for any array but slower than the other.
+    """
+    def __linearTimeAuxiliarySpace(arr):
+        """ remove duplicates/repeats from an array which contains element from 0 to n-1 where n is smaller than the length of array
+            Find duplicates in O(n) time and O(1) extra space"""
+        for i in xrange(len(arr)-1,0,-1):
+            if arr[abs(arr[i])] > 0:
+                arr[abs(arr[i])]  = - arr[abs(arr[i])]
+        rtn = set()
+        for i in xrange(len(arr)-1, 0, -1):
+            if arr[abs(arr[i])] < 0:
+                rtn.add(abs(arr[i]))
+        return list(rtn)
+    def __noneLinearTime(arr):
+        """ This algorithm can be optimized by sort the array first (using in-place merge-sort algorithm ( complexity: O(nlog(n)) )) and comparing adjacent elements: if they are the same then they are duplicates
+        """
+        i = 0
+        rtn = set()
+        while len(arr) > 0 and i < len(arr):
+            for j in xrange(len(arr)-1, i-1, -1):
+                if arr[i] == arr[j] and i < j:
+                    rtn.add(arr[i])
+                    break
+            i += 1
+        return list(rtn)
+    if min(arr) >= 0 and len(arr) >= max(arr) + 1:
+        return __linearTimeAuxiliarySpace(arr)
+    else:
+        return __noneLinearTime(arr)
