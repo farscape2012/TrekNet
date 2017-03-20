@@ -53,6 +53,7 @@ def mergeSort(arr):
 
 def countSort(arr):
     """ sort an array using count sort algorithm
+    This algorithm is useful when the length of list is much larger than the range of elements,i.e., it is useful the range is limited and there ar many repeats.
     :type arr: List[int/float]
     :rtype: int/float    
     Note:
