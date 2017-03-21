@@ -12,7 +12,7 @@ def quickSort(arr):
     left = [x for x in arr if x < pivot]
     equal = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
-    return qsort(left) + equal + qsort(right)
+    return quickSort(left) + equal + quickSort(right)
     
 def mergeSort(arr):
     """ sort an array using merge sort algorithm
