@@ -64,9 +64,9 @@ def countSort(arr):
     """
     dict = {}
     for i in arr:
-        if i in dict:
+        try:
             dict[i] += 1
-        else:
+        except:
             dict[i] = 1
     rtn = []
     for i in xrange(min(arr), max(arr)+1):
