@@ -64,16 +64,14 @@ def countSort(arr):
     """
     dict = {}
     for i in arr:
-        try:
+        if i in dict:
             dict[i] += 1
-        except:
+        else:
             dict[i] = 1
     rtn = []
     for i in xrange(min(arr), max(arr)+1):
-        try:
+        if i in dict:
             rtn.extend([i] * dict[i])
-        except:
-            pass
     return rtn
 
 def insertionSort(arr):
