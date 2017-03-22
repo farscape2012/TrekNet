@@ -1,4 +1,4 @@
-def characterSwap(string, i, j):
+def charSwap(string, i, j):
     """ Swap two characters indexed by i and j in a string.
     :type string: string
     :type i, j: integer
