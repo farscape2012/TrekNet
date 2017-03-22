@@ -1,5 +1,8 @@
 def characterSwap(string, i, j):
     """ Swap two characters indexed by i and j in a string.
+    :type string: string
+    :type i, j: integer
+    :rtype: string 
     """
     if i > len(string) or j > len(string):
         return string
