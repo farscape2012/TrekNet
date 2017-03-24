@@ -60,6 +60,17 @@ def countSort(arr):
     :rtype: int/float    
     Note:
         Time complexity: O(n) in best-case; O(n) on average; O(n) in worst case
+        Space
+
+def hashSort(arr):
+    """ sort an array using hash sort algorithm
+    This algorithm is useful when the length of list is much larger than the range of elements,i.e., it is useful the range is limited and there ar many repeats.
+    Use extra memory (0 - max(array)) to save index.
+    Faster than quicksort
+    :type arr: List[int/float]
+    :rtype: int/float    
+    Note:
+        Time complexity: O(n) in best-case; O(n) on average; O(n) in worst case
         Space complexity: O(n) 
     """
     dict = {}
