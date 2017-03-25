@@ -4,6 +4,13 @@ class Point2D(object):
         self.x = a
         self.y = b
     def maxPoints(self, points):
+        """ sort an array using quick sort algorithm
+        :type points: Point2D object
+        :rtype: int 
+        Note:
+            Time complexity: best case On^2)
+            Space complexity: O(n) 
+        """
         l = len(points)
         m = 0
         for i in range(l):
