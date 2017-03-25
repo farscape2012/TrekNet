@@ -4,7 +4,8 @@ class TreeNode(object):
         self.left = None
         self.right = None
  
-class BinarySearchTree:
+
+class BinarySearchTree(object):
     def __init__(self):
         self.root = None
         self.size = 0
@@ -17,6 +18,27 @@ class BinarySearchTree:
 
     def __iter__(self):
         return self.root.__iter__()
+    def __setitem__(self,k,v):
+        self.put(k,v)
+    
+    def insert(self,key,val):
+        if self.root:
+            self._insert(key,val,self.root)
+        else:
+            self.root = TreeNode(key,val)
+        self.size = self.size + 1
+
+    def _insert(self,key,val,currentNode):
+        if key < currentNode.key:
+            if currentNode.hasLeftChild():
+                self._insert(key,val,currentNode.leftChild)
+            else:
+                currentNode.leftChild = TreeNode(key,val,parent=currentNode)
+        else:
+            if currentNode.hasRightChild():
+                self._insert(key,val,currentNode.rightChild)
+            else:
+                currentNode.rightChild = TreeNode(key,val,parent=currentNode)
     
     def findMaxValueInEachLevel(self, root):
     """ Find max value in Each Tree Row.
