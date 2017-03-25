@@ -2,7 +2,22 @@ class TreeNode(object):
     def __init__(self, x):
         self.val = x
         self.left = None
-        self.right = None     
+        self.right = None
+ 
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+        self.size = 0
+
+    def length(self):
+        return self.size
+
+    def __len__(self):
+        return self.size
+
+    def __iter__(self):
+        return self.root.__iter__()
+    
     def findMaxValueInEachLevel(self, root):
     """ Find max value in Each Tree Row.
     :type root: TreeNode
