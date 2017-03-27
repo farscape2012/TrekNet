@@ -1,2 +1,10 @@
 netifaces
 pyyaml
+
+# Data Matrix/Frame
+pandas
+numpy
+
+# voice controls
+pyaudio
+SpeechRecognition
