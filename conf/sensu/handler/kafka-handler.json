@@ -1,0 +1,6 @@
+{
+  "kafka" : {
+    "servers": "131.160.80.65:9092",
+    "topic": "sensu-metrics-test"
+  }
+}
