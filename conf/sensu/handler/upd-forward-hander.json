@@ -1,0 +1,11 @@
+{
+  "handlers": {
+    "sensu_udp_handler": {
+      "type": "udp",
+      "socket": {
+        "host": "10.10.10.10",
+        "port": 10000
+      }
+    }
+  }
+}
