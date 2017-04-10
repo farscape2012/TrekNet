@@ -20,32 +20,28 @@ require 'timeout'
 require 'poseidon'
 
 class SensuToKafka < Sensu::Handler
-  def handle
-    kafka_servers = settings['kafka']['servers'].split(',').map(&:strip)
-    kafka_topic   = settings['kafka']['topic']
-      
-    producer = Poseidon::Producer.new(kafka_servers, "sensu_kafka_handler")
-    
-    @event['check']['output'].each_line do |metric|
-      m = metric.split
-      next unless m.count == 3
-      key = m[0]
-      next unless key
-      value = m[1].to_f
-      
-      begin
-        timeout(3) do
-          message = Poseidon::MessageToSend.new(kafka_topic, metric)
-          reponse = producer.send_messages([message])
-          if reponse == true
-            puts "kafka-metrics-graphite post ok. message : #{metric}"
-          end
+    def handle
+        kafka_servers = settings['kafka']['servers'].split(',').map(&:strip)
+        kafka_topic   = settings['kafka']['topic']
+
+        producer = Poseidon::Producer.new(kafka_servers, "sensu_kafka_handler")
+
+        @event['check']['output'].each_line do |metric|
+            m = metric.split
+            puts 'metric : #{m}'
+            begin
+                timeout(3) do
+                    message = Poseidon::MessageToSend.new(kafka_topic, metric)
+                    reponse = producer.send_messages([message])
+                    if reponse == true
+                      puts "kafka-metrics-graphite post ok. message : #{metric}"
+                    end
+                end
+            rescue Timeout::Error
+                puts 'kafka-metrics -- timed out while sending metrics'
+            rescue => error
+                puts "kafka-metrics -- failed to send metrics: #{error}"
+            end
         end
-      rescue Timeout::Error
-        puts 'kafka-metrics -- timed out while sending metrics'
-      rescue => error
-        puts "kafka-metrics -- failed to send metrics: #{error}"
-      end
     end
-  end
 end
