@@ -1,0 +1,18 @@
+{
+    "plugin_name": "spark",
+    "hadoop_version": "1.6.0",
+    "node_groups": [
+        {
+            "name": "slave",
+            "count": 3,
+            "node_group_template_id": "834144d3-5214-4456-97c2-81f23af5d130"
+        },
+        {
+            "name": "master",
+            "count": 1,
+            "node_group_template_id": "ecef0a5b-27d1-4926-9db0-1752a771f3d2"
+        }
+    ],
+    "name": "spark-1-6-0-cluster",
+    "default_image_id": "d53b793b-9a27-4e39-a6c5-77a74eaa4036"
+}
