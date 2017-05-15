@@ -1,0 +1,11 @@
+{
+    "plugin_name": "spark",
+    "hadoop_version": "1.6.0",
+    "node_processes": [
+        "namenode",
+        "master"
+    ],
+    "name": "spark-1-6-0-master",
+    "flavor_id": "4",
+    "auto_security_group": true,
+}
