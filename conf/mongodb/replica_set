@@ -1,17 +1,16 @@
-#### Primary server 
-#
-# modify /etc/mongod.conf
-# add replica set name
+#### Modify all mongo servers 
+##
+## modify /etc/mongod.conf
+## add replica set name in all the hosts
 sudo vim /etc/mongod.conf 
     replication:
       replSetName: "rs0"
 
-# Add hosts
-sudo vim /etc/hosts
-    IP  vmserver1
 # Restart the service
 sudo service mongod restart
-# Login mongo, initialize (rs.initiate()) and check config (rs.config())
+# Login mongo from Primary server, and initialize (rs.initiate()), check config (rs.config()) 
+        and add secondary servers (rs.add("IP1:port"); rs.add("IP2:port"))
 
-#### Secondary server
+
+
 
