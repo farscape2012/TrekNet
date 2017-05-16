@@ -1,3 +1,5 @@
+########################################################
+#################### INSTALLATION ######################
 ## Import the public key used by the package management system
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 ## Create a list file for MongoDB for Ubuntu 16.04
@@ -7,40 +9,69 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 sudo service mongod start / stop /status / enable
 
+####################### ROOT user #######################
+## Create administrator user -- root (Provides access to the operations and all the resources)
+## Note: if mongod starts with replica set, then you have to login in the primary node
+use admin
+db.createUser({user: "root", pwd: "root00Me", roles: [ "root" ]})
+db.getUsers()
+##Login as root
+mongo --host 131.160.80.65 -u root -p root00Me --authenticationDatabase admin
+
+################ Create a test database #################
+// Create database db1
+use db1
+// Drop database bdcv1
+use db1
+//db.dropDatabase();
+//Create user for the database bdcv1
+// Owner
+db.createUser( { user: "admin",
+		pwd: "ADMIN",
+		roles: ["readWrite"] } )
+//Anonymous
+db.createUser({
+                 user: "anonymous",
+                 pwd: "anonymous",
+                 roles: [ "read" ]})
+############ Replicat set #############
+## Create a secure key to allow secure communication between replicat set.
+openssl rand -base64 756 -out ~/mongodb.key
+chmod 400 ~/mongodb.key
+
+## Copy the keyfile to each replica set member.
+scp ~/mongodb.key data-server1:~/
+scp ~/mongodb.key data-server2:~/
+scp ~/mongodb.key data-server3:~/
+
+## Enforce access control on each member of the replica set.
+## Running each mongod in the replica set with the keyFile parameter enforces 
+##    both Internal Authentication and Role-Based Access Control.
+sudo vim /etc/mongod.conf 
+security:
+  keyFile: ~/mongodb.key
+  #authorization: enabled # enable security authorization
+
+# login with authentication
+mongo --host 131.160.80.65 -u root -p root00Me --authenticationDatabase admin
+  
+## Modify all mongo servers 
+##
+## modify /etc/mongod.conf
+## add replica set name in all the hosts
+sudo vim /etc/mongod.conf 
+    replication:
+      replSetName: "rs0"
+
+# Restart the service
+sudo service mongod restart
+# Login mongo from Primary server, and initialize (rs.initiate()), check config (rs.config()) 
+        and add secondary servers (rs.add("IP1:port"); rs.add("IP2:port"))
+
+
+############ Configure mongod start service #############
 ## Modify /lib/systemd/system/mongod.service file to customize how mongod start.
 	for instance,
 	--quiet
-	--replSet
+	--replSet <repSetName>
 
-## config /etc/mongod.conf
-# Where and how to store data.
-storage:
-  dbPath: /var/lib/mongodb
-  journal:
-    enabled: true
-#  engine:
-#  mmapv1:
-#  wiredTiger:
-
-# where to write logging data.
-systemLog:
-  destination: file
-  logAppend: true
-  path: /var/log/mongodb/mongod.log
-
-# network interfaces
-net:
-  port: 27017
-  bindIp: 127.0.0.1,IP
-
-
-security:
-   authorization: enabled
-#operationProfiling:
-
-#replication:
-
-#sharding:
-## Enterprise-Only Options:
-#auditLog:
-#snmp:
