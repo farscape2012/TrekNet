@@ -1,0 +1,47 @@
+## Create a secure key to allow secure communication between replicat set.
+openssl rand -base64 756 -out ~/mongodb.key
+
+## Copy the keyfile to each replica set member.
+scp ~/mongodb.key data-server1:~/
+scp ~/mongodb.key data-server2:~/
+scp ~/mongodb.key data-server3:~/
+# Change owner and right in each server
+sudo chown mongodb:mongodb ~/mongodb.key
+chmod 400 ~/mongodb.key
+
+## Enforce access control on each member of the replica set.
+## Running each mongod in the replica set with the keyFile parameter enforces 
+##    both Internal Authentication and Role-Based Access Control.
+security:
+  keyFile: ~/mongodb.key
+  
+## Create administrator user -- root (Provides access to the operations and all the resources)
+## Note: if mongod starts with replica set, then you have to login in the primary node
+use admin
+db.createUser({user: "root", pwd: "root00Me", roles: [ "root" ]})
+db.getUsers()
+## Or
+db.getUser(username)
+## Edit  /etc/mongod.conf file for Security setting
+security:
+  authorization: enabled
+  
+#Login as root
+mongo --host 131.160.80.65 -u root -p root00Me --authenticationDatabase admin
+Create database bdcv1
+	use bdcv1
+Drop database bdcv1
+use dbcv1;
+db.dropDatabase();
+exit
+
+Create user for the database bdcv1
+	# Owner
+db.createUser( { user: "admin",
+		pwd: "ADMIN",
+		roles: ["readWrite"] } )
+#Anonymous
+db.createUser({
+                 user: "anonymous",
+                 pwd: "anonymous",
+                 roles: [ "read" ]})
