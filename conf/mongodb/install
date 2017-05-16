@@ -34,7 +34,8 @@ db.createUser({
                  user: "anonymous",
                  pwd: "anonymous",
                  roles: [ "read" ]})
-############ Replicat set #############
+
+###################### Replicat set ######################
 ## Create a secure key to allow secure communication between replicat set.
 openssl rand -base64 756 -out ~/mongodb.key
 chmod 400 ~/mongodb.key
@@ -68,6 +69,7 @@ sudo service mongod restart
 # Login mongo from Primary server, and initialize (rs.initiate()), check config (rs.config()) 
         and add secondary servers (rs.add("IP1:port"); rs.add("IP2:port"))
 
+####################### Sharding ########################
 
 ############ Configure mongod start service #############
 ## Modify /lib/systemd/system/mongod.service file to customize how mongod start.
