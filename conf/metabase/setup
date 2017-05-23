@@ -1,0 +1,10 @@
+
+### Mounting a mapped file storage volume
+##  In its default configuration Metabase uses the local filesystem to run an 
+##  H2 embedded database to store its own application data. 
+##  The end result is that your Metabase application data will be on disk inside your container and 
+##  lost if you ever remove the container.
+##  Note: 
+##        54321:3000: 54321 can be other port.
+##        ~/metabase:/metabase: Metabase considers ~/metabase as /metabase in metabase's file system
+sudo docker run -d -p 54321:3000 -v ~/metabase:/metabase -e "MB_DB_FILE=/metabase/metabase.db" --name metabase metabase/metabase
