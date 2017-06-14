@@ -18,7 +18,7 @@ setup() {
     sudo pip install --upgrade virtualenv 
     
     sudo mkdir /opt/tools/
-    sudo chown -R ericsson:ericsson /opt/tools/
+    sudo chown -R eric:eric /opt/tools/
     sudo chmod -R 755 /opt/tools/
     cd /opt/tools/
     echo "inside /opt/tools"
@@ -31,10 +31,10 @@ setup() {
     sudo mkdir -p /var/lib/cassandra/commitlog
     sudo mkdir -p /var/lib/cassandra/saved_caches
     sudo mkdir -p /var/log/cassandra/
-    sudo chown -R ericsson:ericsson /var/lib/cassandra/data
-    sudo chown -R ericsson:ericsson /var/lib/cassandra/commitlog
-    sudo chown -R ericsson:ericsson /var/lib/cassandra/saved_caches
-    sudo chown -R ericsson:ericsson /var/log/cassandra/
+    sudo chown -R eric:eric /var/lib/cassandra/data
+    sudo chown -R eric:eric /var/lib/cassandra/commitlog
+    sudo chown -R eric:eric /var/lib/cassandra/saved_caches
+    sudo chown -R eric:eric /var/log/cassandra/
     sudo chmod -R 755 /var/lib/cassandra/data
     sudo chmod -R 755 /var/lib/cassandra/commitlog
     sudo chmod -R 755 /var/lib/cassandra/saved_caches
