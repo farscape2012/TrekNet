@@ -31,3 +31,6 @@ randInt /= 1
 import scala.math._ // import all the libraries in the math.
 abs, cbrt, ceil, round, floor, exp, pow(2,3), sqrt(2,3), hypot(2,3), log10(1000), log(2,7182),min(1,2), max(1,2), 
 random // it generates random value between (random * (11 - 1)).toInt
+
+toRadians(90) // convert degree to dadian
+toDegrees(toRadians(90))
