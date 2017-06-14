@@ -1,0 +1,33 @@
+// From youtube vidoe https://www.youtube.com/watch?v=DzFt0YkZo8M&list=PLrPC0_h8PkNMGtX3Dz6FJZ_il41rg0yTq
+// usefull data type
+Byte
+Boolean
+Char
+Short
+Int
+Long
+Float
+Double // has 15 digit precision
+
+// Create a big integer
+var bigint = BigInt("12312312312321312312312312312312312312321")
+bigint + 1
+val bigdecimal = BigDecimal("3.1415918238219830921830921809382109830921")
+
+// tab function
+var randInt = 100
+randInt. // click tab, it will show all methods (object)
+
+// mathematical operations
++,-,/,*, %
+
+// Scala does not support ++ nor --, but
+randInt += 1
+randInt -= 1
+randInt *= 1
+randInt /= 1
+
+// import a library
+import scala.math._ // import all the libraries in the math.
+abs, cbrt, ceil, round, floor, exp, pow(2,3), sqrt(2,3), hypot(2,3), log10(1000), log(2,7182),min(1,2), max(1,2), 
+random // it generates random value between (random * (11 - 1)).toInt
