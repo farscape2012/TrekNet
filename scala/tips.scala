@@ -139,3 +139,38 @@ friends2 += "Mike"
 friends2 ++= Array("Mike", "Paul")
 friends2.insert(2, "Sam","Marry", "Sally")
 friends2.remove(1,2)
+
+//////////////////////////////////////////////////////
+// multi-dim array
+var multTable = Array.ofDim[Int](3,4)
+for(i<-0 until 3; j <- 0 until 4){
+  multTable(i)(j) = i * j
+}
+
+Array.sum, .max, , min, sortWith(_>_) // or sortWith(_<_)
+// Return index sequence
+Array.deep.mkString(",")
+
+///////////////////////////////////////////////////////
+// map  
+// http://docs.scala-lang.org/overviews/collections/maps.html
+
+var employees = Map("Manager"->"Bob", "Secretary"-> "John") // immutable
+println(employees("Manager"))
+var customers = collection.mutable.Map(100-> "Paul", 101-> "Sally")
+customers(100) = "Ffdsae"
+customers(101) = "fdjka"
+customers(101) = 100 // Error
+customers("100") = "Ffdsae
+// add/update new maps
+customers = customers + (102-> "102", 103->"103") 
+customers = customers + (102-> "102", 103->"104")  // if keys exist, update values
+customers = customers + (102-> 102)  // Error. It somehow needs the same datatype.
+// remove
+customers = customers - 102
+customers = customers - (102,103,100) // If a key does not exist, it will be skipped. 
+
+////////////////////////////////////////////////////
+// tuple
+var tuple = (103, "John", 10.24)
+printf("%s owes us $%.2f", tuple._2, tuple._3)
