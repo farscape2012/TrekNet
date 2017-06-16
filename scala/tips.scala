@@ -174,3 +174,14 @@ customers = customers - (102,103,100) // If a key does not exist, it will be ski
 // tuple
 var tuple = (103, "John", 10.24)
 printf("%s owes us $%.2f", tuple._2, tuple._3)
+
+import scala.collection.mutable.ArrayBuffer
+var t:Array[(String,Int)] = new Array(10)
+
+var f= ArrayBuffer[(String, Int)]()
+f.insert(0,("Mike", 10))
+f = f :+(("x",1))
+f = (("x",1)) :+ f // Error
+
+var l : List[(String, Int)] = List()
+l = l :+(("x",1))
