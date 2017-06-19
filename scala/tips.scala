@@ -185,3 +185,73 @@ f = (("x",1)) :+ f // Error
 
 var l : List[(String, Int)] = List()
 l = l :+(("x",1))
+
+/////////////////////////////////////////////////////
+// class
+class Animal(var name:String, var sound:String){
+    // default constructor, first called before anything
+    // there can be many constructors with different parameters
+    def this(name:String){
+        this("No name", "No sound")
+        this.setName(name)
+    }
+    def this(){
+        this("No name", "No sound")
+    }
+    
+    override def toStriing(){
+        return "%s with the id %d says %s".format(this.name, this.id, this.sound)
+    }
+    
+    val id = animal.newIdNum // companion (static)
+    protected var type = "No type" // can be accessed by inheritted class.
+    def getName():String = name
+    def getSound():String = sound
+    
+    def setName(name:String){
+        if (!name.matches(".*\\d+.*")){
+            this.name = name
+        }else{
+            this.name = "Not valid name"
+        }
+    }
+}
+    
+object Animal{
+  // companion object
+  private var idNum = 0
+  private def newIdNum = {idNum += 1; idNum}
+  
+  def main(args:Array[String]){
+      var rover = new Animal
+      rover.setName("Rover")
+      rover.setSound("Woof")
+      println(rover.toString())
+      val whiskers = new Animal("Whiskers", "Meow")
+      println(whiskers.toString())
+  }
+}
+
+/////////////////////////////////////////////////////
+// inherit
+class Dog(name:String, sound:String, growl:String) extends Animal(name, sound){
+    def this(name:String, sound:String){
+        this(name, sound, "No growl")
+    }
+    def this(name:String)[
+        this(name, "No sound", "No growl")
+    }
+}
+
+//////////////////////////////////////////////////////
+// Abstract class
+//    Can not be instantiated, containing abstract and non-abstract methods
+abstract class Mammal(val name:String){
+    var moveSpeed : Double
+    def move: String // no function body
+}
+
+class Wolf(name:String) extends Mamal(name){
+    var moveSpeed = 35.0
+    def move: "The wolf %s runs %.2f mph".format(this.name, this.moveSpeed)
+}
