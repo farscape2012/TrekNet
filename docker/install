@@ -1,0 +1,37 @@
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+apt-cache policy docker-ce
+sudo apt-get install -y docker-ce
+sudo service docker status
+
+
+# If you want to avoid typing sudo whenever you run the docker command, add your username to the docker group:
+sudo usermod -aG docker ${USER}
+
+#You will be prompted to enter your user's password to continue. Afterwards, you can confirm that your user is now added to the docker group by typing:
+id -nG
+
+# add a user to the docker group
+sudo usermod -aG docker username
+
+# Example
+# download and run "hello word" example
+docker run hello-world
+
+docker search ubuntu
+
+# As an example, let's run a container using the latest image of Ubuntu. 
+# The combination of the -i and -t switches gives you interactive shell access into the container:
+docker run -it ubuntu
+
+root@f3c33fjeiw3:/#      # inside docker
+
+# delete all docker containers
+docker rm $(docker ps -aq)
+
+# delete docker a image
+docker rmi ubuntu #(repository name)
+
+# apt-get install -y ** does not work as there is no package cache in the image, you need to run:
+apt-get -qq update
