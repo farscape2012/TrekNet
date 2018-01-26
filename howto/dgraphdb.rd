@@ -213,8 +213,38 @@ _:myID <an_edge> "某物"@zh-Hans .
 #   This is helpful for debugging queries and for tutorials that need to explain parts of queries in-line,
 #   which is what we’ll do for the more complex queries you’ll encounter later in the tutorial.
 
+## Deleting Data
+#   There are three deletion options inside a delete mutation.
+#
+#     1. <uid> <edge> <uid>/"value" . Delete a single triple
+#     2. <uid> <edge> * . Delete all triples for a given edge
+#     3. <uid> * * . Delete all triples for a given node
 
+{
+  delete {
+    # Delete a single triple
+    <0x1c3eb> <name> "Steven" .
+    <0x1c3eb> <age> "38" .
 
+    # Delete all triples for a given edge
+    <0x1c3eb> <friend> * .
+
+    # Delete all triples for a given node
+    <0x1c3eb> * * .
+  }
+}
+
+## Predicate Query
+#   For any node in the graph _predicate_ queries for the name of all outgoing edges.
+#   Note that this is different to a schema or intent in designing a graph because any given node might or might
+#   not have all the predicates that other nodes have.
+
+{
+  company(func: allofterms(name, "Michael")) {
+    _predicate_
+    uid
+  }
+}
 
 
 
