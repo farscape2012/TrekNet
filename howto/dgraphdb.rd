@@ -41,6 +41,15 @@ dgraph-ratel  -port 11111
 #                      2006-01-02T15:04:05.999999999+10:00 or 2006-01-02T15:04:05.999999999
 #   geo	            geometries stored using go-geom (https://github.com/twpayne/go-geom)
 
+## Query schema / Predicate
+#   Dgraph queries and the visualization will help us understand the schema of the dataset.
+{
+  q(func:allofterms(name@en, "Kathryn Bigelow")) {
+    _predicate_
+    director.film (first: 10) { _predicate_ }
+	}
+}
+# or
 schema(pred: [name, age, friend, owns_pet]) {
   type
   index
@@ -50,6 +59,8 @@ schema(pred: []) {
   type
   index
 }
+# or queries for everything about the schema
+schema { }
 
 ## Adding schema - mutating schema
 #   As we saw in an earlier lesson, Dgraph stores a schema describing the types of predicates.
@@ -126,9 +137,6 @@ _:myID <an_edge> "某物"@zh-Hans .
 #
 #   In terms of data modeling, some reverse edges always make sense, like boss_of, others like ,friend, are 
 #   sometimes, but not always bidirectional.
-
-
-
 
 ## Dgraph query
 #   Dgraph query results are graphs. In fact, the result structure matches the query structure.
@@ -246,9 +254,138 @@ _:myID <an_edge> "某物"@zh-Hans .
   }
 }
 
+## Expand Predicate
+#   expand(...predicates...) is used to query for all given predicates, rather than listing them in the query. Calling
+#     expand(_all_)
+{
+  expand(func: allofterms(name, "Michael")) {
+    expand(_all_) {
+      expand(_all_) {
+        expand(_all_) 
+      }
+    }
+  }
+}
+
+## Load a big dataset that contains one million triples
+dgraph live -r 1million.rdf.gz --zero localhost:5080
+
+## Multiple Named Query Blocks
+#   Note From now on, to run the queries, you’ll need to have loaded the million triple movie dataset.
+#   Queries can be issued as multiples.
+#
+#   For queries labelled q1, ..., qn issued as a multiple query block, the JSON result will contain labelled
+#   answer blocks q1, ..., qn for each query. Queries issued in this way are independent. The visualization here finds 
+#   the overlap in the two queries based on uid, but the JSON result contains the independent answer for each query.
+#   So, In this case, we are visualizing the overlap between two distinct queries.
+#
+#   Query variables allow the answers from one block to be used in another, joining the two queries. 
+#
+{
+  caro(func: allofterms(name@en, "Marc Caro")) {
+    name@en
+    director.film {
+      name@en
+    }
+  }
+  jeunet(func: allofterms(name@en, "Jean-Pierre Jeunet")) {
+    name@en
+    director.film {
+      name@en
+    }
+  }
+}
+#   If a block is labelled with var, no results are returned for that query.
+{
+  var(func:allofterms(name@en, "Peter Jackson")) @normalize @cascade {
+    director.film
+  }
+}
 
 
+## Query Variables
+#   Results can be stored in variables and used elsewhere in the query.
+#   Variables are declared by
+var_name as some_block {  }
+#   where var_name is any distinct variable name andsome_block is either a whole query or an internal
+#   block of a query matching on an edge.
 
+{
+  A as not_a_real_query(...) {
+    B as some_edge @filter(...) { # can't use C or B in this filter
+      C as ... { 
+        # A, B and C here
+      }
+      # A, B and C here
+    }
+    # A, B and C can be used in any blocks here
+  }
+  # A, B and C can be used in any other query block
+}
+#   Variables don’t affect the semantics of the query at the point they are defined.
+#   It is an error to define a variable but not use it.
+#
+#   In particular, note that, variables are uid lists, not the graph matched by the block, and that the variable 
+#   evaluates to all uid’s the block matches for the whole query, not the uid’s matched by any one branch.
+#
+#   Example 1
+#   Query variables in a child block allow the query to carry answers matched at one level down to the children to
+#   filter against. For example, take of the set of actors in all Jane Campion films; our challenge is to find which 
+#   pairs in that set have acted together on a film not directed by Jane Campion.
+#
+#   The @cascade directive ensures answers match all parts of the query - otherwise, actors who
+#   had no matching co-actors could be returned.
+{
+  coactors(func:allofterms(name@en, "Jane Campion")) @cascade {
+    JC_films as director.film {      # JC_films = all Jane Campion's films
+      starting_movie: name@en
+      starring {
+        JC_actors as performance.actor {      # JC_actors = all actors in all JC films
+          actor : name@en
+          actor.film {
+            performance.film @filter(not uid(JC_films)) {
+              film_together : name@en
+              starring {
+                # find a coactor who has been in some JC film
+                performance.actor @filter(uid(JC_actors)) {
+                  coactor_name: name@en
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#   Example 2
+#   Query Variables in another query block I
+#   The variable JC_actor evaluated to all actors in any Jane Campion film. No matter where we use 
+#   it, it’s the full set. That’s the key to using Dgraph’s variables correctly: understand that they are global in the
+#   sense that they evaluate to all nodes that could match that edge in the query, not local in the sense that would
+#   evaluate to different results for each Jane Campion film. We can also use query variables in another query block, both
+#   as the nodes the root filter matches and in internal filters.
+#
+#   Peter Jackson often appears in his own films, mostly in the background or just a glimpse, but he’s there. The query 
+#   shows all films that Peter Jackson has both directed and appeared in.
+
+  PJ as var(func:allofterms(name@en, "Peter Jackson")) @normalize @cascade {
+    F as director.film
+  }
+
+  peterJ(func: uid(PJ)) @normalize @cascade {
+    name : name@en
+    actor.film {
+      performance.film @filter(uid(F)) {
+        film_name: name@en
+      }
+      performance.character {
+        character: name@en
+      }
+    }
+  }
+}
 
 
 
