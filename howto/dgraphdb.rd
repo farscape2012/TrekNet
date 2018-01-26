@@ -369,7 +369,7 @@ var_name as some_block {  }
 #
 #   Peter Jackson often appears in his own films, mostly in the background or just a glimpse, but he’s there. The query 
 #   shows all films that Peter Jackson has both directed and appeared in.
-
+{
   PJ as var(func:allofterms(name@en, "Peter Jackson")) @normalize @cascade {
     F as director.film
   }
@@ -387,7 +387,53 @@ var_name as some_block {  }
   }
 }
 
+# Example 3
+{
+  var(func: allofterms(name@en, "Taraji Henson")) {
+    actor.film {
+      F as performance.film {
+        G as genre
+      }
+    }
+  }
+  Taraji_films_by_genre(func: uid(G)) {
+    genre_name : name@en
+    films : ~genre @filter(uid(F)) {
+      film_name : name@en
+    }
+  }
+}
 
+# Example 4  joining two queries.
+#   For two directors find the actors who have worked with both (not necessarily on the same movie). Many directors
+#   won’t have actors in common, so start with some you are sure will (the answer below uses Peter Jackson and Martin Scorsese who have a small number of actors in common).
+#   As an optional challenge, for each of those actors list the movies they have made with either director.
+{
+  var(func: allofterms(name@en, "Peter Jackson")) {
+    F_PJ as director.film {
+      starring{
+        A_PJ as performance.actor
+      }
+    }
+  }
+
+   var(func: allofterms(name@en, "Martin Scorsese")) {
+    F_MS as director.film {
+      starring{
+        A_MS as performance.actor
+      }
+    }
+  }
+
+  actors(func: uid(A_PJ)) @filter(uid(A_MS)) @cascade {
+    actor: name@en
+    actor.film {
+      performance.film @filter (uid(F_PJ) OR uid(F_MS)) {
+      	name@en
+      }
+    }
+  }
+}
 
 
 
