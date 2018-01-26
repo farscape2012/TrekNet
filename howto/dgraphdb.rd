@@ -41,6 +41,20 @@ dgraph-ratel  -port 11111
 #                      2006-01-02T15:04:05.999999999+10:00 or 2006-01-02T15:04:05.999999999
 #   geo	            geometries stored using go-geom (https://github.com/twpayne/go-geom)
 
+## Adding schema - mutating schema
+#   As we saw in an earlier lesson, Dgraph stores a schema describing the types of predicates.
+#   When we want to add new data to an existing schema, we can just add it. But if we want to add new data in
+#   a new schema we have two choices:
+#     1. Add the data and let Dgraph work out the schema, or
+#     2. Specify a schema and then add the data
+#   
+#   Dgraph can work out the schema just fine. But functions and filtering can only be applied to indexed
+#   predicates and for that we need to specify the schema.
+#
+#   Making changes to the schema is called mutating the schema.
+#   Run the schema mutation. The index allows applying filter functions, such as searching for all companies that
+#   participate in a particular industry.
+
 ## Dgraph query
 #   Dgraph query results are graphs. In fact, the result structure matches the query structure.
 
