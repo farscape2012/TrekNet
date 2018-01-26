@@ -31,7 +31,7 @@ dgraph-ratel  -port 11111
 
 # Type
 #   Dgraph Type	    Description
-#   uid             for nodes
+#   uid             for nodes, is picked by Dgraph and is unique
 #   int	            signed 64 bit integer
 #   float	          double precision floating point number
 #   string	        string; support UTF-8
@@ -40,6 +40,16 @@ dgraph-ratel  -port 11111
 #   dateTime	      RFC3339 time format with optional timezone eg: 
 #                      2006-01-02T15:04:05.999999999+10:00 or 2006-01-02T15:04:05.999999999
 #   geo	            geometries stored using go-geom (https://github.com/twpayne/go-geom)
+
+schema(pred: [name, age, friend, owns_pet]) {
+  type
+  index
+}
+# or
+schema(pred: []) {
+  type
+  index
+}
 
 ## Adding schema - mutating schema
 #   As we saw in an earlier lesson, Dgraph stores a schema describing the types of predicates.
@@ -54,6 +64,71 @@ dgraph-ratel  -port 11111
 #   Making changes to the schema is called mutating the schema.
 #   Run the schema mutation. The index allows applying filter functions, such as searching for all companies that
 #   participate in a particular industry.
+
+industry: string @index(term) .
+boss_of: uid .
+
+## Now that the schema has been updated we can add data as triples.
+#   Dgraph creates its own internal id’s for nodes, but we need some way to refer to the same node many times in
+#   our input data. That’s what _:company1 does. Technically, these are ‘blank nodes’. They tell Dgraph to create a
+#   node, give it an internal id and make sure it’s used consistently.
+#
+#   After the upload, the label _:company1 doesn’t exist in Dgraph and we can’t query for it.
+#   You’ll see in the result that Dgraph has replaced it with an internal id. You can query for this internal 
+#   id — remember func: uid(<uid_number>).
+#
+#   Making changes to the graph stored in Dgraph is called mutating the data.
+
+{
+  set {
+    _:company1 <name> "CompanyABC" .
+    _:company2 <name> "The other company" .
+
+    _:company1 <industry> "Manufacturing" .
+    _:company1 <industry> "Fabricated Metal" .
+    _:company1 <industry> "Machinery" .
+
+    _:company2 <industry> "Manufacturing" .
+    _:company2 <industry> "High Tech" .
+
+    _:jack <works_for> _:company1 .
+    _:ivy <works_for> _:company1 .
+    _:zoe <works_for> _:company1 .
+
+    _:jose <works_for> _:company2 .
+    _:alexei <works_for> _:company2 .
+
+    _:ivy <boss_of> _:jack .
+
+    _:alexei <boss_of> _:jose .
+  }
+}
+
+## External Identifiers
+#   Dgraph doesn’t support directly setting the IDs of nodes. If an application requires unique identifiers for
+#   nodes other than the UID assigned by Dgraph, then these are supplied as edges. It’s up to a user application to
+#   ensure the uniqueness of such IDs/keys.
+
+## Language Support
+#   Language tags are used on the string on input
+#
+_:myID <an_edge> "something"@en .
+_:myID <an_edge> "某物"@zh-Hans .
+
+## Reverse edges
+#   Edges are directional. A query can’t traverse an edge in reverse.
+#
+#   There are two choices to query in both directions:
+#     1. Add the reverse edge to the schema and add all the reverse edge data.
+#     2. Tell Dgraph to always store the reverse edge using the @reverse keyword in the schema.
+#
+#   Run the schema mutation and Dgraph will compute all the reverse edges. The reverse edge of an_edge is ~an_edge.
+#
+#   In terms of data modeling, some reverse edges always make sense, like boss_of, others like ,friend, are 
+#   sometimes, but not always bidirectional.
+
+
+
 
 ## Dgraph query
 #   Dgraph query results are graphs. In fact, the result structure matches the query structure.
