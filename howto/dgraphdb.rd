@@ -266,6 +266,17 @@ _:myID <an_edge> "某物"@zh-Hans .
     }
   }
 }
+# expand and _predicate_ can be used with variables.
+{
+  var(func:allofterms(name@en, "Cherie Nowlan")) {
+    pred as _predicate_
+  }
+
+  q(func:allofterms(name@en, "Cherie")) {
+    expand(val(pred)) { expand(_all_) }
+  }
+}
+
 
 ## Load a big dataset that contains one million triples
 dgraph live -r 1million.rdf.gz --zero localhost:5080
@@ -406,8 +417,9 @@ var_name as some_block {  }
 
 # Example 4  joining two queries.
 #   For two directors find the actors who have worked with both (not necessarily on the same movie). Many directors
-#   won’t have actors in common, so start with some you are sure will (the answer below uses Peter Jackson and Martin Scorsese who have a small number of actors in common).
-#   As an optional challenge, for each of those actors list the movies they have made with either director.
+#   won’t have actors in common, so start with some you are sure will (the answer below uses Peter Jackson and Martin 
+#   Scorsese who have a small number of actors in common). As an optional challenge, for each of those actors list
+#   the movies they have made with either director.
 {
   var(func: allofterms(name@en, "Peter Jackson")) {
     F_PJ as director.film {
@@ -435,11 +447,124 @@ var_name as some_block {  }
   }
 }
 
+## Value variables - min, max, sum, avg and count
+#   Example 1 -- max, count, val
+{
+  q(func: allofterms(name@en, "Ang Lee")) {
+    director.film {
+      uid
+      name@en
+      # Count the number of starring edges for each film
+      num_actors as count(starring)
 
+      # In this block, num_actors is the value calculated for this film.
+      # The film with uid and name
+    }
+    # Here num_actors is a map of film uid to value for all
+    # of Ang Lee's films
+    #
+    # It can't be used directly, but aggregations like min and max
+    # work over all the values in the map
+    most_actors : max(val(num_actors))
+  }
+  # to use num_actors in another query, make sure it's done in a context
+  # where the film uid to value map makes sense.
+}
+#   Example 2 -- count, avg, val
+{
+  ID as var(func: allofterms(name@en, "Steven Spielberg")) {
+    # count the actors and save to a variable
+    director.film {
+      num_actors as count(starring)
+    }
+  	# average as ...
+    average as avg(val(num_actors))
+  }
+  # average is a map from uid to value so it must be used in a context
+  # where the map makes sense.  Because query block avs works over the UID
+  # of Steven Spielberg, the value variable has the value we expect.
+  avs(func: uid(ID)) @normalize {
+    name : name@en
+    # get the average
+    average_actors : val(average)
+    # also count the movies
+    num_films : count(director.film)
+  }
+}
+#   Example 3 -- filtering and ordering
+#    If the context provided by the UIDs of the block is correct, value variables can also be used in
+#    filtering and ordering.
+{
+  ID as var(func: allofterms(name@en, "Steven")) { # match all names containing "Steven"
+    director.film {
+      num_actors as count(starring)
+    }
+    average as avg(val(num_actors))
+  }
 
+  avs(func: uid(ID), orderdesc: val(average)) @filter(ge(val(average), 40)) @normalize {
+    name : name@en
+    average_actors : val(average)
+    num_films : count(director.film)
+  }
+}
+#   Example 4 -- math function
+{
+    var(func:allofterms(name@en, "Jean-Pierre Jeunet")) {
+      name@en
+      films as director.film {
+        stars as count(starring)
+        directors as count(~director.film)
+        ratio as math(stars / directors)
+      }
+    }
+    best_ratio(func: uid(films), orderdesc: val(ratio)){
+      name@en
+      stars_per_dirctor : val(ratio)
+    num_stars : val(stars)
+  }
+}
 
+{ # Get all directors
+  var(func: has(director.film)) @cascade {
+    director.film {
+      date as initial_release_date
+    }
+    # Store maxDate as a variable
+    maxDate as max(val(date))
+    daysSince as math(since(maxDate)/(24*60*60))
+  }
 
+  # Order by maxDate
+  me(func: uid(maxDate), orderdesc: val(maxDate), first: 10) {
+    name@en
+    days : val(daysSince)
 
+    # For each director, sort by release date and get latest movie.
+    director.film(orderdesc: initial_release_date, first: 1) {
+      name@en
+      initial_release_date
+    }
+  }
+}
+
+## GroupBy
+#    A groupby query aggregates query results given a set of properties on which to group elements. For example, a
+#    query containing the block (below) finds nodes reachable along the director.film edge, partitions these into
+#    groups based on genre, then counts how many nodes are in each group. Inside a groupby block, only aggregations
+#    are allowed and count can only be applied to uid.
+{
+  var(func:allofterms(name@en, "Steven Spielberg")) {
+    director.film @groupby(genre) {
+      a as count(uid)
+    }
+  }
+
+  byGenre(func: uid(a), orderdesc: val(a)) {
+    name@en
+    num_movies : val(a)
+  }
+}
 
 
 
