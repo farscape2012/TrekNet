@@ -219,6 +219,20 @@ func main() {
 	}
 }
 
+// The range form of the for loop iterates over a slice or map.
+// When ranging over a slice, two values are returned for each iteration.
+// The first is the index, and the second is a copy of the element at that index.
+// You can skip the index or value by assigning to _.
+var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+func main() {
+	for i, v := range pow {
+	// for _, value := range pow
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+}
+
+
 //// if
 //  the expression need not be surrounded by parentheses ( ), but can have them. But the braces { } are required.
 if( x < 0 ){
@@ -391,6 +405,8 @@ func main() {
 
 //// Arrays
 // The type [n]T is an array of n values of type T.
+// An array has a fixed size. A slice, on the other hand, is a dynamically-sized, flexible view into the
+// elements of an array. In practice, slices are much more common than arrays.
 // Slices: left closed, and right open
 //   The type []T is a slice with elements of type T. var s []int = primes[1:4]
 //   A slice does not store any data, it just describes a section of an underlying array.
@@ -456,6 +472,267 @@ func main() {
 	}
 	fmt.Println(s)
 }
+
+// Creating a slice with make
+// Slices can be created with the built-in make function; this is how you create dynamically-sized arrays.
+// The make function allocates a zeroed array and returns a slice that refers to that array:
+a := make([]int, 5)  // len(a)=5
+//To specify a capacity, pass a third argument to make:
+
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+b = b[:cap(b)] // len(b)=5, cap(b)=5
+b = b[1:]      // len(b)=4, cap(b)=4
+
+func main() {
+	// Create a tic-tac-toe board.
+	board := [][]string{
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+	}
+
+	// The players take turns.
+	board[0][0] = "X"
+	board[2][2] = "O"
+	board[1][2] = "X"
+	board[1][0] = "O"
+	board[0][2] = "X"
+
+	for i := 0; i < len(board); i++ {
+		fmt.Printf("%s\n", strings.Join(board[i], " "))
+	}
+}
+
+// slice append
+func append(s []T, vs ...T) []T
+
+func main() {
+	var s []int
+	printSlice(s)
+
+	// append works on nil slices.
+	s = append(s, 0)
+	printSlice(s)
+
+	// The slice grows as needed.
+	s = append(s, 1)
+	printSlice(s)
+
+	// We can add more than one element at a time.
+	s = append(s, 2, 3, 4)
+	printSlice(s)
+}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+
+//// Maps
+// A map maps keys to values.
+// The zero value of a map is nil. A nil map has no keys, nor can keys be added.
+// The make function returns a map of the given type, initialized and ready for use.
+// the keys can be string, int, float32.
+
+type Vertex struct {
+	Lat, Long float64
+}
+
+var m map[string]Vertex
+
+var n = map[string]Vertex{
+	"Bell Labs": Vertex{
+		40.68433, -74.39967,
+	},
+	"Google": Vertex{
+		37.42202, -122.08408,
+	},
+}
+
+func main() {
+	m = make(map[string]Vertex)
+	m["Bell Labs"] = Vertex{
+		40.68433, -74.39967,
+	}
+	fmt.Println(m["Bell Labs"])
+	fmt.Println(n)
+}
+
+// Mutating Maps
+//   Insert or update an element in map m:
+m[key] = elem
+
+//   Retrieve an element:
+elem = m[key]
+
+//   Delete an element:
+delete(m, key)
+
+//   Test that a key is present with a two-value assignment:
+elem, ok = m[key]
+
+//   If key is in m, ok is true. If not, ok is false.
+//   If key is not in the map, then elem is the zero value for the map's element type.
+//   Note: if elem or ok have not yet been declared you could use a short declaration form:
+elem, ok := m[key]
+
+//// Function values
+// Functions are values too. They can be passed around just like other values.
+// Function values may be used as function arguments and return values.
+
+func compute(fn func(float64, float64) float64) float64 {
+	//         [    type             ][ return ]
+	return fn(3, 4)
+}
+
+func main() {
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+
+	fmt.Println(compute(hypot))
+	fmt.Println(compute(math.Pow))
+}
+
+//// Methods
+// Go does not have classes. However, you can define methods on types.
+// A method is a function with a special receiver argument.
+// The receiver appears in its own argument list between the func keyword and the method name.
+// In this example, the Abs method has a receiver of type Vertex named v.
+// Remember: a method is just a function with a receiver argument.
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+// Here's Abs written as a regular function with no change in functionality.
+func Abs(v Vertex) float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+	v := Vertex{3, 4}
+	fmt.Println(v.Abs())
+	fmt.Println(Abs(v))
+}
+// You can declare a method on non-struct types, too.
+// In this example we see a numeric type MyFloat with an Abs method. 
+// You can only declare a method with a receiver whose type is defined in the same package as the method. 
+// You cannot declare a method with a receiver whose type is defined in another package (which includes
+// the built-in types such as int).
+
+import (
+	"fmt"
+	"math"
+)
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
+	}
+	return float64(f)
+}
+
+func main() {
+	f := MyFloat(-math.Sqrt2)
+	fmt.Println(f.Abs())
+}
+
+// another example
+package main
+import (
+	"fmt"
+	"math"
+)
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+// or 
+//func (v Vertex) Scale(f float64) Vertex {
+//	v.X = v.X * f
+//	v.Y = v.Y * f
+//	return v
+//}
+
+func main() {
+	v := Vertex{3, 4}
+	v.Scale(10)
+	fmt.Println(v.Abs())
+}
+
+//
+// Similar functionality with normal way
+//
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Vertex struct {
+	X, Y float64
+}
+
+func Abs(v Vertex) float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func Scale(v *Vertex, f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+func main() {
+	v := Vertex{3, 4}
+	Scale(&v, 10)
+	fmt.Println(Abs(v))
+}
+
+// Another example
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+func (v *Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+	v := &Vertex{3, 4}
+	fmt.Printf("Before scaling: %+v, Abs: %v\n", v, v.Abs())
+	v.Scale(5)
+	fmt.Printf("After scaling: %+v, Abs: %v\n", v, v.Abs())
+}
+
 
 
 
