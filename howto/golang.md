@@ -399,6 +399,7 @@ func main() {
 //  
 // Slice length and capacity
 //   A slice has both a length and a capacity.
+//   The zero value of a slice is nil.
 package main
 
 import "fmt"
@@ -417,13 +418,18 @@ func main() {
   //b := [2] string {"hello", "world"}
   fmt.Println(b[1:2])
   // slice
-	var s []int = primes[1:4]
-	fmt.Println(s)
+  var s []int = primes[1:4]
+  fmt.Println(s)
   fmt.Println(s[0:10])
   fmt.Println(s[:10])
   fmt.Println(s[0:])
   fmt.Println(s[:])
   fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+  var d []int
+  fmt.Println(d, len(d), cap(d))
+  if d == nil {
+  fmt.Println("nil!")
+	}
 }
 
 package main
